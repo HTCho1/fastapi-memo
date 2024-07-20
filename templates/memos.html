@@ -122,12 +122,12 @@
             right: 20px;
         }
     
-        .username-button, .logout-button {
+        .username-button, .logout-button, .signout-button {
             display: flex;
             align-items: center;
         }
     
-        .username-button i, .logout-button i {
+        .username-button i, .logout-button i, .signout-button i {
             margin-right: 5px;
         }        
     
@@ -150,8 +150,8 @@
             font-size: 0.9rem; /* 폰트 크기 조정 */
         }
     
-        .logout-button {
-            margin-left: 10px; /* 로그아웃 버튼과 사용자 ID 사이의 간격 */
+        .logout-button, .signout-button {
+            margin-left: 10px; /* 버튼 사이의 간격 */
         }
 
         .btn-sm {
@@ -260,6 +260,25 @@
             .catch((error) => {
                 console.error('Error:', error);
             });
+        }
+
+        function signout() {
+            if (!confirm('정말로 회원 탈퇴하시겠습니까?')) return;
+
+            fetch('/signout', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                window.location.href = '/'; // 회원 탈퇴 후 홈페이지로 리다이렉트
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         }        
     </script>
 </head>
@@ -277,6 +296,9 @@
             <div class="header-item">
                 <button onclick="logout()" class="btn btn-sm btn-danger logout-button">
                     <i class="fas fa-sign-out-alt"></i> 로그아웃
+                </button>
+                <button onclick="signout()" class="btn btn-sm btn-danger signout-button">
+                    <i class="fas fa-user-slash"></i> 회원 탈퇴
                 </button>
             </div>
         </div>
